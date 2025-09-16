@@ -7,7 +7,7 @@ const projects = [
     name: "Personal Portfolio",
     description: `This is the website you are on!`,
     imageUrl: "/portfolio.png",
-    githubUrl: "https://github.com/WaterPheonix196/Main-Website",
+    githubUrl: "https://github.com/WaterPheonix196/waterpheonix196.github.io",
   },
 //  {
 //    name: "Project 2",
