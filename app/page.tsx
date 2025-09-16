@@ -5,7 +5,7 @@ import GitHubIcon from "../components/GithubIcon";
 const projects = [
   {
     name: "Personal Portfolio",
-    description: "This is the website you are on!",
+    description: `This is the website you are on!`,
     imageUrl: "/portfolio.png",
     githubUrl: "https://github.com/WaterPheonix196/Main-Website",
   },
@@ -56,7 +56,7 @@ export default function Home() {
             About Me
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            I'm a programmer that loves to play with code and make cool things.
+            I&rsquo;m a programmer that loves to play with code and make cool things.
             My main focus is on game modding but I also enjoy webdev and machine
             learning.
           </p>
