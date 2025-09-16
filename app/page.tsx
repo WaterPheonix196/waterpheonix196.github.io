@@ -1,10 +1,11 @@
+import Image from "next/image";
 import ProjectCard from "../components/ProjectCard";
 import GitHubIcon from "../components/GithubIcon"; 
 
 const projects = [
   {
     name: "Personal Portfolio",
-    description: "This is the website you're currently on!",
+    description: "This is the website you are on!",
     imageUrl: "/portfolio.png",
     githubUrl: "https://github.com/WaterPheonix196/Main-Website",
   },
@@ -72,7 +73,7 @@ export default function Home() {
                 key={skill.name}
                 className="rounded-full border border-gray-700 bg-gray-800/50 px-4 py-2 flex items-center gap-3 shadow-sm"
               >
-                <img src={skill.icon} alt={skill.name} className="w-6 h-6" />
+                <Image src={skill.icon} alt={skill.name} width={24} height={24} />
                 <span className="text-gray-200">{skill.name}</span>
               </div>
             ))}
