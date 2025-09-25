@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ProjectCard from "../components/ProjectCard";
 import GitHubIcon from "../components/GithubIcon"; 
+import AnimatedName from "../components/AnimatedName";
 
 const projects = [
   {
@@ -40,12 +41,10 @@ export default function Home() {
     <main className="flex min-h-screen w-full flex-col items-center space-y-12 p-8 sm:p-12 bg-gradient-to-br from-[#0f172a] to-[#1e293b]">
       <div className="w-full max-w-4xl space-y-12">
         <header className="text-center pt-8">
-          <h1 className={`text-5xl sm:text-6xl font-extrabold drop-shadow ${gradientText}`}>
-            EpsilonPhoenix
-          </h1>
-          <p className="text-lg text-gray-400 mt-3">
-            I try to code sometimes (sometimes it works)
-          </p>
+          <div className="mx-auto max-w-3xl flex justify-center">
+            <AnimatedName name="EpsilonPhoenix" fontSize={110} className="mx-auto" />
+          </div>
+          <p className="text-lg text-gray-400 mt-3">I try to code sometimes (sometimes it works)</p>
         </header>
 
         <section
