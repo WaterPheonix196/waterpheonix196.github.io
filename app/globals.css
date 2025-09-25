@@ -9,18 +9,5 @@ body {
   color: var(--foreground);
   background: radial-gradient(circle at center, #1a1a1a, #0a0a0a);
   font-family: var(--font-open-sans), Arial, Helvetica, sans-serif;
-  overflow: hidden;
-}
-
-.spotlight {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
+  overflow-x: hidden;
 }

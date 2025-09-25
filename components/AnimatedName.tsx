@@ -41,11 +41,9 @@ export default function AnimatedName({
 
   return (
     <div
-      className={`block ${className}`}
+      className={`block w-full ${className}`}
       style={{
         maxWidth: maxWidth ? `${maxWidth}px` : undefined,
-        width: `${vbWidth}px`,
-        height: `${vbHeight}px`,
       }}
       role="img"
       aria-label={name}

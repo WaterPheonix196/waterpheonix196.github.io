@@ -70,14 +70,25 @@ export default function Home() {
             {skills.map((skill) => (
               <div
                 key={skill.name}
-                className="rounded-full border border-gray-700 bg-gray-800/50 px-4 py-2 flex items-center gap-3 shadow-sm"
+                className="relative group rounded-full border border-gray-700 bg-gray-800/50 shadow-sm overflow-hidden"
               >
-                <Image src={skill.icon} alt={skill.name} width={24} height={24} />
-                <span className="text-gray-200">{skill.name}</span>
+                <div
+                  className="absolute -inset-px rounded-full bg-gradient-to-r from-cyan-400 to-green-400
+                             transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out
+                             origin-right group-hover:origin-left"
+                />
+                
+                <div className="absolute inset-[1px] rounded-full bg-gray-800/95" />
+                
+                <div className="relative flex items-center gap-3 px-4 py-2">
+                  <Image src={skill.icon} alt={skill.name} width={24} height={24} />
+                  <span className="text-gray-200">{skill.name}</span>
+                </div>
               </div>
             ))}
           </div>
         </section>
+
 
         <section
           id="projects"
