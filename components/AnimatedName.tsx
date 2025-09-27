@@ -5,8 +5,8 @@ import React, { useEffect, useRef, useState } from "react";
 type Props = {
   name?: string;
   className?: string;
-  fontSize?: number; // px
-  maxWidth?: number; // constrain svg width in px (optional)
+  fontSize?: number;
+  maxWidth?: number;
 };
 
 export default function AnimatedName({
@@ -17,27 +17,50 @@ export default function AnimatedName({
 }: Props) {
   const textRef = useRef<SVGTextElement | null>(null);
   const [textLen, setTextLen] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Measure text length after mount so dash lengths are accurate
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!isReady) return;
+    
     const el = textRef.current;
     if (!el) return;
     const len = Math.max(1, Math.ceil(el.getComputedTextLength()));
     setTextLen(len);
-  }, [name, fontSize]);
+  }, [name, fontSize, isReady]);
 
-  // Padding around measured text so letters have room
+  // Use estimated length on first render
+  const estimatedLen = name.length * fontSize * 0.55;
+  const actualLen = textLen || estimatedLen;
+
   const padding = fontSize * 0.8;
-  const vbWidth = Math.max(300, textLen + padding * 2);
+  const vbWidth = Math.max(300, actualLen + padding * 2);
   const vbHeight = Math.round(fontSize * 1.3);
 
-  // stroke widths
-  const outlineStroke = Math.max(1, Math.round(fontSize * 0.04)); // outer outline
-  const animatedStroke = Math.max(1, Math.round(fontSize * 0.045)); // animated stroke on top
+  const outlineStroke = Math.max(1, Math.round(fontSize * 0.04));
+  const animatedStroke = Math.max(1, Math.round(fontSize * 0.045));
 
-  // dash lengths (use measured text length scaled so dashes animate nicely)
-  const dashArray = Math.max(120, textLen); // ensure minimum
+  const dashArray = Math.max(120, actualLen);
   const dashOffset = dashArray;
+
+  // Don't render until ready to prevent white flash
+  if (!isReady) {
+    return (
+      <div
+        className={`block w-full ${className}`}
+        style={{
+          maxWidth: maxWidth ? `${maxWidth}px` : undefined,
+          minHeight: `${vbHeight}px`,
+        }}
+      />
+    );
+  }
 
   return (
     <div
@@ -54,6 +77,7 @@ export default function AnimatedName({
         width="100%"
         height="100%"
         xmlns="http://www.w3.org/2000/svg"
+        style={{ opacity: textLen ? 1 : 0.8, transition: 'opacity 0.2s' }}
       >
         <defs>
           <linearGradient id="gradFill" x1="0" x2="1" y1="0" y2="0">
@@ -66,7 +90,7 @@ export default function AnimatedName({
               type="rotate"
               from="0 0.5 0.5"
               to="360 0.5 0.5"
-              dur="8s"
+              dur="6s"
               repeatCount="indefinite"
             />
           </linearGradient>
@@ -80,7 +104,7 @@ export default function AnimatedName({
               type="rotate"
               from="0 0.5 0.5"
               to="-360 0.5 0.5"
-              dur="10s"
+              dur="7s"
               repeatCount="indefinite"
             />
           </linearGradient>
@@ -94,12 +118,11 @@ export default function AnimatedName({
           <text
             x={0}
             y={0}
-            ref={null}
             textAnchor="start"
             fontFamily="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial"
             fontWeight="800"
             fontSize={fontSize}
-            fill="#0b1220" /* dark fill for contrast */
+            fill="#0b1220"
             stroke="#0b1220"
             strokeWidth={outlineStroke}
             strokeLinejoin="round"
@@ -138,8 +161,7 @@ export default function AnimatedName({
 
       <style jsx>{`
         #animatedText {
-          /* animate stroke offset from full to zero so dashes run along text */
-          animation: dashOffsetAnim 3.6s linear infinite, dashArrayAnim 4s linear infinite;
+          animation: dashOffsetAnim 2.5s linear infinite, dashArrayAnim 3s linear infinite;
           filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
         }
 
@@ -168,12 +190,6 @@ export default function AnimatedName({
           100% {
             stroke-dashoffset: 0;
           }
-        }
-
-
-        /* responsive tweak: keep the svg crisp on small screens */
-        :global(.animated-name-small) svg {
-          max-height: 64px;
         }
       `}</style>
     </div>
